@@ -5,7 +5,8 @@ import {
     saveProductToDatabase,
     updateProductInDatbase,
     deleteProductFromDatabase,
-    searchProductsByNameFromDatabase
+    searchProductsByNameFromDatabase,
+    searchProductsByBrandFromDatabase,
 } from '../data/dataUtil'
 
 export const GET_PRODUCTS = 'GET_PRODUCTS';
@@ -19,6 +20,7 @@ export const SORT_BY_POPULARITY = 'SORT_BY_POPULARITY';
 export const SORT_BY_PRICE_ASC = 'SORT_BY_PRICE_ASC';
 export const SORT_BY_PRICE_DESC = 'SORT_BY_PRICE_DESC';
 export const SEARCH_PRODUCTS_BY_NAME = 'SEARCH_PRODUCTS_BY_NAME';
+export const SEARCH_PRODUCTS_BY_BRAND = 'SEARCH_PRODUCTS_BY_BRAND';
 
 
 
@@ -54,11 +56,22 @@ export const searchProductsByName = (productName) => {
             const products = await searchProductsByNameFromDatabase(productName);
             dispatch({ type: SEARCH_PRODUCTS_BY_NAME, payload: products});
         } catch (error) {
-            console.error('Error buscando producto por su nombre:', error)
+            console.error('Ese producto no existe:', error)
         }
     }
 }
 
+// buscar producto por marca
+export const searchProductsByBrand = (brand) => {
+    return async function (dispatch) {
+        try {
+            const products = await searchProductsByBrandFromDatabase(brand);
+            dispatch({ type: SEARCH_PRODUCTS_BY_BRAND, payload: products})
+        } catch (error) {
+            console.error('Esa marca de producto no existe:', error)
+        }
+    }
+}
 
 // Crear un nuevo producto
 export const createProduct = (productData) => {

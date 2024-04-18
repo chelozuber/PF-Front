@@ -40,8 +40,22 @@ export const searchProductsByNameFromDatabase = async (productName) => {
         });
         return products;
     } catch (error) {
-        console.error('Error buscando producto por nombre', error);
+        console.error('El nombre de ese producto no existe', error);
         throw error;
+    }
+}
+
+// Buscar producto por marca en la DB
+export const searchProductsByBrandFromDatabase = async (brand) => {
+    try {
+        const products = await Product.findAll({
+            where: {
+            brand: brand
+            }
+        });
+        return products;
+    } catch (error) {
+        console.error('El producto con esa marca es inexistene')
     }
 }
 
