@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { searchProductsByBrand, searchProductsByName } from '../../redux/actions';
 
-const searchBar = () => {
+const SearchBar = () => {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState('');
     const [searchByBrand, setSearchByBrand] = useState(false);
@@ -36,4 +36,4 @@ const searchBar = () => {
       );
 };
 
-export default searchBar; 
+export default SearchBar;

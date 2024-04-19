@@ -1,13 +1,4 @@
-
-import {
-    fetchProductsFromDatabase,
-    fetchProductsByIdFromDatabase,
-    saveProductToDatabase,
-    updateProductInDatbase,
-    deleteProductFromDatabase,
-    searchProductsByNameFromDatabase,
-    searchProductsByBrandFromDatabase,
-} from '../data/dataUtil'
+import axios from 'axios';
 
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_PRODUCTS_BY_ID = 'GET_PRODUCTS_BY_ID';
@@ -22,14 +13,15 @@ export const SORT_BY_PRICE_DESC = 'SORT_BY_PRICE_DESC';
 export const SEARCH_PRODUCTS_BY_NAME = 'SEARCH_PRODUCTS_BY_NAME';
 export const SEARCH_PRODUCTS_BY_BRAND = 'SEARCH_PRODUCTS_BY_BRAND';
 
+const BASE_URL = 'http://localhost:3001';
 
 
 // Obtener todos los productos
-export const getPoducts = () => {
+export const getProducts = () => {
     return async function (dispatch) {
         try {
-            // llamada a la base de datos
-            const products = await fetchProductsFromDatabase();
+            const response = await axios.get(`${BASE_URL}/products`);
+            const products = response.data;
             dispatch({ type: GET_PRODUCTS, payload: products });
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -37,13 +29,14 @@ export const getPoducts = () => {
     };
 };
 
+
 // Obtener un producto por su ID
-export const getProductById = (productId) => {
+export const getProductById = (id) => {
     return async function (dispatch) {
         try {
-            // llamada a la base de datos
-            const product = await fetchProductsByIdFromDatabase(productId);
-            dispatch({ type: GET_PRODUCTS_BY_ID, payload: product});
+            const response = await axios.get(`${BASE_URL}/products/${id}`);
+            const product = response.data;
+            dispatch({ type: GET_PRODUCTS_BY_ID, payload: product });
         } catch (error) {
             console.error('Error fetching product by ID:', error);
         }
@@ -53,58 +46,63 @@ export const getProductById = (productId) => {
 export const searchProductsByName = (productName) => {
     return async function (dispatch) {
         try {
-            const products = await searchProductsByNameFromDatabase(productName);
-            dispatch({ type: SEARCH_PRODUCTS_BY_NAME, payload: products});
+            const response = await axios.get(`${BASE_URL}/products?name=${productName}`);
+            const products = response.data;
+            dispatch({ type: SEARCH_PRODUCTS_BY_NAME, payload: products });
         } catch (error) {
-            console.error('Ese producto no existe:', error)
+            console.error('Error searching products by name:', error);
         }
-    }
-}
+    };
+};
 
 // buscar producto por marca
 export const searchProductsByBrand = (brand) => {
     return async function (dispatch) {
         try {
-            const products = await searchProductsByBrandFromDatabase(brand);
-            dispatch({ type: SEARCH_PRODUCTS_BY_BRAND, payload: products})
+            const response = await axios.get(`${BASE_URL}/products?brand=${brand}`);
+            const products = response.data;
+            dispatch({ type: SEARCH_PRODUCTS_BY_BRAND, payload: products });
         } catch (error) {
-            console.error('Esa marca de producto no existe:', error)
+            console.error('Error searching products by brand:', error);
         }
-    }
-}
+    };
+};
 
 // Crear un nuevo producto
 export const createProduct = (productData) => {
     return async function (dispatch) {
         try {
-            const createdProduct = await saveProductToDatabase(productData);
-            dispatch({ type: CREATE_PRODUCT, payload: createdProduct});
+            const response = await axios.post(`${BASE_URL}/products`, productData);
+            const newProduct = response.data;
+            dispatch({ type: CREATE_PRODUCT, payload: newProduct });
         } catch (error) {
-            console.error('Error creando producto:', error);
+            console.error('Error creating product:', error);
         }
     };
 };
 
+
 // Actualizar un producto existente
-export const updateProduct = (productId, updatedProductData) => {
+export const updateProduct = (id, updatedProductData) => {
     return async function (dispatch) {
         try {
-            const updatedProduct = await updateProductInDatbase(productId, updateProduct);
+            const response = await axios.put(`${BASE_URL}/products/${id}`, updatedProductData);
+            const updatedProduct = response.data;
             dispatch({ type: UPDATE_PRODUCT, payload: updatedProduct });
         } catch (error) {
-            console.error('Error actualizando producto:', error);
+            console.error('Error updating product:', error);
         }
     };
 };
 
 // Eliminar un producto
-export const deleteProduct = (productId) => {
+export const deleteProduct = (id) => {
     return async function (dispatch) {
         try {
-            await deleteProductFromDatabase(productId);
-            dispatch({ type: DELETE_PRODUCT, dispatch: productId});
+            await axios.delete(`${BASE_URL}/products/${id}`);
+            dispatch({ type: DELETE_PRODUCT, payload: id });
         } catch (error) {
-            console.error('Error eliminando producto:', error);
+            console.error('Error deleting product:', error);
         }
     };
 };
@@ -148,3 +146,4 @@ export const sortByPriceDesc = () => {
 
 
 
+// VER RUTAS DE OLIVER
