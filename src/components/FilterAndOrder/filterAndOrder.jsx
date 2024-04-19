@@ -21,22 +21,22 @@ const FilterAndOrder = () => {
   };
 
   return (
-    <div className="filter-and-order">
-      <div className="filter">
-        <div className="category-filter">
+    <div>
+      <div>
+        <div>
           <span onClick={() => setShowCategories(!showCategories)}>Categorías</span>
           {showCategories && (
-            <div className="category-options">
+            <div>
               <div onClick={() => handleCategoryClick('Electrónicos')}>Electrónicos</div>
               <div onClick={() => handleCategoryClick('Ropa')}>Ropa</div>
               <div onClick={() => handleCategoryClick('Hogar')}>Hogar</div>
             </div>
           )}
         </div>
-        <div className="brand-filter">
+        <div>
           <span onClick={() => setShowBrands(!showBrands)}>Marcas</span>
           {showBrands && (
-            <div className="brand-options">
+            <div>
               <div onClick={() => handleBrandClick('Nike')}>Nike</div>
               <div onClick={() => handleBrandClick('Adidas')}>Adidas</div>
               <div onClick={() => handleBrandClick('Samsung')}>Samsung</div>
@@ -44,7 +44,7 @@ const FilterAndOrder = () => {
           )}
         </div>
       </div>
-      <div className="order">
+      <div>
         <span onClick={handleBestSellersClick}>Más vendidos</span>
         <span onClick={handleMostPopularClick}>Más populares</span>
       </div>

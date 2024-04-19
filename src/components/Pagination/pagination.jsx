@@ -35,9 +35,6 @@ const Pagination = () => {
 
   return (
     <div>
-      <div className={style.main}>
-        {/* No necesitamos los botones de paginación */}
-      </div>
       <div>
         {allProducts.length === 0 ? (
           <NotFound />
